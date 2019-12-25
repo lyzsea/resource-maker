@@ -9,6 +9,8 @@
 #include <string>
 #include <Shlwapi.h>
 
+#pragma comment(lib,"Shlwapi.lib")
+
 std::wstring releaseFilesFromResource(HINSTANCE hInstance) {
 	HRSRC hResInfo = FindResource(hInstance, MAKEINTRESOURCE(IDR_MAGIC2), _T("magic"));
 	if (hResInfo == NULL)
@@ -73,22 +75,11 @@ std::wstring releaseFilesFromResource(HINSTANCE hInstance) {
 	//或得到全部的文件的数量
 	GetZipItem(hZip, -1, &ze);
 	int numitems = ze.index;	//文件数量
-	//TCHAR* strExepath = new TCHAR[numitems*MAX_PATH];
-	//if (NULL == strExepath)
-	//	return 0;
-	//ZeroMemory(strExepath, numitems*MAX_PATH*sizeof(TCHAR));
-	//LPCTSTR lpStar = strExepath;
 	UINT ExeNum = 0;
 	for (int zi = 0; zi < numitems; zi++)
 	{
 		//循环获得每一个文件的信息
 		GetZipItem(hZip, zi, &ze);
-		//if (0 == _tcsnicmp(ze.name + (_tcslen(ze.name) - 4), _T(".exe"), 4))
-		//{
-		//	//_stprintf_s(strExepath, MAX_PATH, A("%s%s"), tempDir, ze.name);
-		//	strExePath = tempDir;
-		//	strExePath += ze.name;
-		//}
 
 		TCHAR file_name[MAX_PATH] = { 0 };		//保存文件名
 		_stprintf_s(file_name, _T("%s%s"), tempDir, ze.name);

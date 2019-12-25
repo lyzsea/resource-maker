@@ -177,9 +177,14 @@ void CmakerDlg::OnBnClickedBtnSelectloader()
 {
 	// TODO: Add your control notification handler code here
 	TCHAR tcPath[MAX_PATH] = { 0 };
-	if (CUtilFunc::SelectFile(this, TRUE, _T("input File(*.exe)|*.EXE|All Files (*.*)|*.*||"), tcPath, MAX_PATH))
+	if (CUtilFunc::SelectFile(this, TRUE, _T("input File(*.exe)|*.EXE|All Files (*.*)|*.*||"), tcPath, MAX_PATH)
+		&& CUtilFunc::IsDirectory(tcPath))
 	{
 		m_editLoaderFile.SetWindowText(tcPath);
+	}
+	else 
+	{
+		AfxMessageBox(_T("Invalid directory£¬please reselect!"));
 	}
 }
 

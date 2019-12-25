@@ -3,6 +3,18 @@
 #include "utils/Util.h"
 
 
+bool CUtilFunc::IsDirectory(const TCHAR* filename)
+{
+	DWORD dwAttr = ::GetFileAttributes(filename);  //得到文件属性
+	if (dwAttr == 0xFFFFFFFF)    // 文件或目录不存在
+		return false;
+	else if (dwAttr&FILE_ATTRIBUTE_DIRECTORY)  // 如果是目录
+		return true;
+	else
+		return false;
+
+}
+
 void CUtilFunc::SelectFolder(CEdit& edit_ctrl, HWND m_hWnd)
 {
 	// TODO: Add your control notification handler code here
@@ -23,8 +35,6 @@ void CUtilFunc::SelectFolder(CEdit& edit_ctrl, HWND m_hWnd)
 	{
 		edit_ctrl.SetWindowText(tcPath);
 	}
-	else
-		AfxMessageBox(_T("Invalid directory，please reselect!"));
 }
 
 BOOL CUtilFunc::SelectFile(CWnd* pParent, BOOL bOpen, LPCTSTR pFilters, LPTSTR pFilePath, DWORD dwPathLength)
