@@ -238,8 +238,14 @@ void CmakerDlg::OnBnClickedBtnGenerate()
 	copyLoaderFile = copyLoaderFile.substr(0, copyLoaderFile.find_last_of("."));
 	copyLoaderFile.append("_generate.exe");
 	CopyFile(tcLoaderPath, copyLoaderFile.c_str(), TRUE);
+	//Retrieves a handle that can be used by the UpdateResource function to add, delete, or replace resources in a binary module.
+	//https://docs.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-beginupdateresourcea
 	HANDLE hHandle = BeginUpdateResource(copyLoaderFile.c_str(), false);
+	// Adds, deletes, or replaces a resource in a portable executable (PE) file. 
+	//https://docs.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-updateresourcea
 	UpdateResource(hHandle, _T("magic"), MAKEINTRESOURCE(130), 2052, lpData, eSize);
+	// Commits or discards changes made prior to a call to UpdateResource.
+	// https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-endupdateresourcea
 	EndUpdateResource(hHandle, FALSE);
 
 	//¹Ø±ÕZIPÎÄ¼þ¾ä±ú
