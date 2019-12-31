@@ -1,6 +1,7 @@
 #sites
 *.d
-
+*.db
+*.opendb
 # Compiled Object files
 *.slo
 *.lo

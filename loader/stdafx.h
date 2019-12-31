@@ -19,3 +19,4 @@
 
 
 // TODO: reference additional headers your program requires here
+void DebugOutputMsg(const _TCHAR* pszFormat, ...);
