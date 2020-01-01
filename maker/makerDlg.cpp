@@ -236,7 +236,7 @@ void CmakerDlg::OnBnClickedBtnGenerate()
 	//替换资源 magic 为压缩好的ZIP数据
 	std::string copyLoaderFile = tcLoaderPath;
 	copyLoaderFile = copyLoaderFile.substr(0, copyLoaderFile.find_last_of("."));
-	copyLoaderFile.append("_generate.exe");
+	copyLoaderFile.append("_launcher.exe");
 	CopyFile(tcLoaderPath, copyLoaderFile.c_str(), TRUE);
 	//Retrieves a handle that can be used by the UpdateResource function to add, delete, or replace resources in a binary module.
 	//https://docs.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-beginupdateresourcea
